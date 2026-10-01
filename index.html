@@ -1,1 +1,82 @@
 
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClickGame</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #111;
+      color: white;
+      padding: 40px 20px;
+    }
+
+    button {
+      padding: 18px 35px;
+      font-size: 22px;
+      border: 0;
+      border-radius: 12px;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    #clickBtn {
+      background: #00c853;
+      color: white;
+    }
+
+    #registerBtn {
+      background: #2979ff;
+      color: white;
+    }
+
+    #count {
+      font-size: 50px;
+      margin: 25px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>🔥 ClickGame</h1>
+
+  <p>Kattints és gyűjts pontokat!</p>
+
+  <div id="count">0</div>
+
+  <button id="clickBtn">KATTINTÁS</button>
+
+  <br>
+
+  <button id="registerBtn">REGISZTRÁCIÓ</button>
+
+  <script>
+    const SUPABASE_URL = "https://ypaujxeiowceacykecwo.supabase.co";
+    const SUPABASE_KEY = "IDE_MÁSOLTAD_AZ_ÚJ_PUBLISHABLE_KEYED";
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+    let count = 0;
+
+    document.getElementById("clickBtn").onclick = function () {
+      count++;
+      document.getElementById("count").textContent = count;
+    };
+
+    document.getElementById("registerBtn").onclick = function () {
+      alert("A regisztráció hamarosan elkészül!");
+    };
+  </script>
+
+</body>
+</html>
