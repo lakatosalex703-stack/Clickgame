@@ -56,6 +56,10 @@
                 msg.style.color = "red";
                 msg.innerText = error.message;
             else 
+                document.getElementById('auth-section').style.display = 'none';
+                document.getElementById('game-section').style.display = 'block';
+                document.getElementById('user-email').innerText = currentUser.email;
+                await loadUserData(currentUser.id);
             document.getElementById('auth-section').style.display = 'none';
 document.getElementById('game-section').style.display = 'block';
 document.getElementById('user-email').innerText = email;
