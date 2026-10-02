@@ -56,6 +56,11 @@
                 msg.style.color = "red";
                 msg.innerText = error.message;
             } else {
+            document.getElementById('auth-section').style.display = 'none';
+document.getElementById('game-section').style.display = 'block';
+document.getElementById('user-email').innerText = email;
+await loadUserData(data.user.id);
+
                 msg.style.color = "green";
                 msg.innerText = "Sikeres regisztráció! Kérlek, erősítsd meg az emailedet.";
             }
