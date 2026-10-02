@@ -31,50 +31,54 @@
         <div class="card">
             <h1>ClickGame</h1>
             <p>Üdvözlet, <span id="user-email"></span>!</p>
-            <h3>Egyenleg: <span id="balance" style="font-size: 40px; color: #2979ff;">0</span></h3>
-            <button id="click-btn" class="click-btn" style="background: #00c853; color: white;">KATTINTÁS</button>
+            <h3>Egyenleg: <span id="balance">0</span></h3>
+            <button id="click-btn" class="click-btn" style="background: #00c853; color: white;">Kattints!</button>
             <br>
             <button id="logout-btn" style="background: #e57373; color: white; margin-top: 20px;">Kijelentkezés</button>
         </div>
     </div>
 
     <script>
-        const SUPABASE_URL = "https://ypaujxeiowceacykecwo.supabase.co";
-        const SUPABASE_ANON_KEY = "sb_publishable_DERC1ZESHhAGXgFP7B9STw_ME-H5DMP"
+        const SUPABASE_URL = "https://ypaujxeiowceakycecwo.supabase.co";
+        const SUPABASE_ANON_KEY = "sb_publishable_DERC1ZESHAGxGFP7B9STw_ME-h5DMP";
 
         const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         let currentUser = null;
         let currentBalance = 0;
 
-         document.getElementById('register-btn').addEventListener('click', async () => {
+        // Regisztráció
+        document.getElementById('register-btn').addEventListener('click', async () => {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const { data, error } = await supabase.auth.signUp({ email, password });
             const msg = document.getElementById('auth-message');
+
+            const { data, error } = await supabase.auth.signUp({ email, password });
+
             if (error) {
                 msg.style.color = "red";
                 msg.innerText = error.message;
-            else 
+            } else {
+                currentUser = data.user;
+                msg.style.color = "green";
+                msg.innerText = "Sikeres regisztráció!";
+
+                // Bejelentkeztetés és nézetváltás
                 document.getElementById('auth-section').style.display = 'none';
                 document.getElementById('game-section').style.display = 'block';
                 document.getElementById('user-email').innerText = currentUser.email;
                 await loadUserData(currentUser.id);
-            document.getElementById('auth-section').style.display = 'none';
-document.getElementById('game-section').style.display = 'block';
-document.getElementById('user-email').innerText = email;
-await loadUserData(data.user.id);
-
-                msg.style.color = "green";
-                msg.innerText = "Sikeres regisztráció! Kérlek, erősítsd meg az emailedet.";
             }
         });
 
+        // Bejelentkezés
         document.getElementById('login-btn').addEventListener('click', async () => {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
             const msg = document.getElementById('auth-message');
+
+            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
             if (error) {
                 msg.style.color = "red";
                 msg.innerText = error.message;
@@ -87,11 +91,13 @@ await loadUserData(data.user.id);
             }
         });
 
+        // Kijelentkezés
         document.getElementById('logout-btn').addEventListener('click', async () => {
             await supabase.auth.signOut();
             location.reload();
         });
 
+        // Adatok betöltése
         async function loadUserData(userId) {
             const { data, error } = await supabase
                 .from('profiles')
@@ -105,8 +111,10 @@ await loadUserData(data.user.id);
             }
         }
 
+        // Kattintás gomb
         document.getElementById('click-btn').addEventListener('click', async () => {
             if (!currentUser) return;
+
             currentBalance += 1;
             document.getElementById('balance').innerText = currentBalance;
 
