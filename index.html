@@ -9,6 +9,25 @@
   const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 </script>
 <!-- HTML rész -->
+document.getElementById('signup-btn').addEventListener('click', async () => {
+  // TESZT: Ez felugrik kattintáskor?
+  alert('A gomb működik, elindult a regisztráció!');
+
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  const { data, error } = await supabase.auth.signUp({
+    email: email,
+    password: password,
+  });
+
+  if (error) {
+    alert('Supabase hiba: ' + error.message);
+  } else {
+    alert('Sikeres regisztráció!');
+  }
+});
+
 <input type="email" id="email" placeholder="E-mail" />
 <input type="password" id="password" placeholder="Jelszó" />
 
