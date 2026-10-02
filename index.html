@@ -47,7 +47,7 @@
         let currentUser = null;
         let currentBalance = 0;
 
-        document.getElementById('register-btn').addEventListener('click', async () => {
+         document.getElementById('register-btn').addEventListener('click', async () => {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const { data, error } = await supabase.auth.signUp({ email, password });
@@ -55,7 +55,7 @@
             if (error) {
                 msg.style.color = "red";
                 msg.innerText = error.message;
-            } else {
+            else 
             document.getElementById('auth-section').style.display = 'none';
 document.getElementById('game-section').style.display = 'block';
 document.getElementById('user-email').innerText = email;
